@@ -20,6 +20,8 @@
     "rimraf": "~2.2.2",
     "github": "git+https://github.com/guybedford/node-github.git",
     "tar": "~0.1.18",
-    "request": "~2.27.0"
+    "request": "~2.27.0",
+    "octonode": "~0.4.2",
+    "superagent": "~0.15.7"
   }
 }
