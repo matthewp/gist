@@ -2,7 +2,7 @@
 
 This is a gist endpoint for [jspm](http://jspm.io).
 
-You may identify a gist either by `user` and `filename` or just by `gist id`. For example:
+You may identify a gist either by `user` and `filename` or just by `gist id`. For example [this gist](https://gist.github.com/matthewp/7795772):
 
 ```javascript
 // By user and filename
