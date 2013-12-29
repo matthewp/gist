@@ -1,26 +1,22 @@
-/*var GistLocation = require('./gist');
+var GistLocation = require('./gist');
 var gist = new GistLocation();
 
-gist.getVersions('matthewp/framework.js', function(res){
-  console.log(JSON.stringify(res));
-});
-
-return;*/
-var github = require('./github');
-
-github = new github({
-  baseDir: '.',
-  log: true,
-  tmpDir: '.',
-  username: '',
-  password: ''
-});
-
-github.getVersions('twbs/bootstrap', function(versions) {
+function test(a1, a2) {
+ var args = 
+ gist.getVersions.apply(gist, a1.concat([function(versions){
   console.log(versions);
-  github.download('twbs/bootstrap', 'v3.0.0', 'e8a1df5f060bf7e6631554648e0abde150aedbe4', 'test-repo', function() {
-    console.log('done');
-  }, function(err) {
-    console.log(err);
-  });
-});
+
+  gist.download.apply(gist, a2.concat([function(res){
+    console.log(res);
+  }, function(err){
+    console.error(err);            
+  }]));
+}, function(err){
+  console.error('Get versions', err);               
+}]));
+ 
+}
+
+test(['matthewp/framework.js'], ['matthewp/framework.js', 'master', 'adca60ebab5e16aa556da1855fc9debd0df5e514', 'test-repo']);
+
+test(['8175510'], ['8175510', 'master', null, 'test-repo2']);

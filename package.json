@@ -1,8 +1,8 @@
 {
-  "name": "jspm-github",
-  "version": "0.1.0",
+  "name": "matthew-gist",
+  "version": "0.0.1",
   "description": "",
-  "main": "github.js",
+  "main": "gist.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,12 +16,7 @@
     "url": "https://github.com/jspm/github/issues"
   },
   "dependencies": {
-    "mkdirp": "~0.3.5",
     "rimraf": "~2.2.2",
-    "github": "git+https://github.com/guybedford/node-github.git",
-    "tar": "~0.1.18",
-    "request": "~2.27.0",
-    "octonode": "~0.4.2",
     "superagent": "~0.15.7"
   }
 }
