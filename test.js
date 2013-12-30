@@ -1,5 +1,8 @@
 var GistLocation = require('./gist');
-var gist = new GistLocation();
+var gist = new GistLocation({
+  username: null,
+  password: null
+});
 
 function test(a1, a2) {
  var args = 

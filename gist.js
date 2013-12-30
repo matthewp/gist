@@ -12,15 +12,20 @@ var fetch = function(builder){
     }
 
     var url = builder(id, rev);
-    request.get(url)
-      .set('User-Agent', 'matthewp')
-      .end(function(res){
-        if(!res.ok) {
-          return callback(new Error(res.text));
-        }
+    var req = request.get(url)
+      .set('User-Agent', 'matthewp');
 
-        callback(null, res.body);
-      });
+    if(this.username) {
+      req.auth(this.username, this.password);
+    }
+
+    req.end(function(res){
+      if(!res.ok) {
+        return callback(new Error(res.text));
+      }
+
+      callback(null, res.body);
+    });
   };
 };
 
@@ -73,6 +78,9 @@ module.exports = GistLocation;
 function GistLocation(options) {
   options = options || {};
   this.log = options.log !== false;
+  this.username = options.username;
+  this.password = options.password;
+  this.baseDir = options.baseDir;
 }
 
 GistLocation.prototype = {
@@ -102,17 +110,22 @@ GistLocation.prototype = {
     };
 
     if(id) {
-      gist(id, function(err, res){
+      gist.call(this, id, function(err, res){
         if(err) return errback(err);
         save(res);
       });
     } else {
-      request.get(url)
-        .set('User-Agent', 'matthewp')
-        .end(function(err, res){
-          if(err) return errback(err);
-          save(res.body);
-        });
+      var req = request.get(url)
+        .set('User-Agent', 'matthewp');
+
+      if(this.username) {
+        req.auth(this.username, this.password);
+      }
+
+      req.end(function(err, res){
+        if(err) return errback(err);
+        save(res.body);
+      });
     }
   },
 
@@ -120,7 +133,7 @@ GistLocation.prototype = {
     var info = parts(repo);
 
     var byId = function(id, file){
-      gist(id, function(err, res){
+      gist.call(this, id, function(err, res){
         if(err) return errback(err);
 
         var version = res.history.filter(function(item){
@@ -145,7 +158,7 @@ GistLocation.prototype = {
       return byId.call(this, info.id);
     }
 
-    user(info.user, function(err, res){
+    user.call(this, info.user, function(err, res){
       if(err) {
         if(err.message.indexOf('Not Found') !== -1) {
           return callback();
@@ -170,7 +183,7 @@ GistLocation.prototype = {
   },
 
   versions: function(id, callback, errback){
-    gist(id, function(err, res){
+    gist.call(this, id, function(err, res){
       if(err) return errback(err);
 
       var history = res.history;
@@ -197,7 +210,7 @@ GistLocation.prototype = {
       return this.versions(info.id, callback, errback);
     }
 
-    user(info.user, function(err, res){
+    user.call(this, info.user, function(err, res){
       if(err) {
         if(err.message.indexOf('Not Found') !== -1) {
           return callback();
