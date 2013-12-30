@@ -151,9 +151,9 @@ GistLocation.prototype = {
         return names.indexOf(info.file) !== -1;
       });
 
+      // Not found
       if(!files.length) {
-        var err = new Error('Unable to file the file ' + info.file);
-        return errback(err);
+        return callback();
       }
 
       var id = files[0].id;
@@ -199,13 +199,13 @@ GistLocation.prototype = {
         return names.indexOf(info.file) !== -1;
       });
 
+      // Not found
       if(!files.length) {
-        var err = new Error('Unable to file the file ' + info.file);
-        return errback(err);
+        return callback();
       }
 
       var id = files[0].id;
       this.versions(id, callback, errback);
     }.bind(this));
   }
-}
+};
