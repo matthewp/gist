@@ -1,4 +1,5 @@
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 var path = require('path');
 var request = require('superagent');
 var rimraf = require('rimraf');
@@ -57,15 +58,13 @@ var parts = function(str){
  */
 var prepareDir = function(dir, callback, errback) {
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-    return callback();
+    return mkdirp(dir, callback);
   }
 
   rimraf(dir, function(err) {
     if (err)
       return errback(err);
-    fs.mkdirSync(dir);
-    callback();
+    mkdirp(dir, callback);
   });
 };
 
