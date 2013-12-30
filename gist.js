@@ -76,7 +76,9 @@ function GistLocation(options) {
 }
 
 GistLocation.prototype = {
-  construct: GistLocation,
+  constructor: GistLocation,
+
+  degree: 1,
 
   /*
    *  Given a gist id and (optionally) file name, get the file
@@ -144,7 +146,13 @@ GistLocation.prototype = {
     }
 
     user(info.user, function(err, res){
-      if(err) return errback(err);
+      if(err) {
+        if(err.message.indexOf('Not Found') !== -1) {
+          return callback();
+        }
+
+        return errback(err);
+      }
 
       var files = res.filter(function(item){
         var names = Object.keys(item.files);
@@ -191,6 +199,10 @@ GistLocation.prototype = {
 
     user(info.user, function(err, res){
       if(err) {
+        if(err.message.indexOf('Not Found') !== -1) {
+          return callback();
+        }
+
         return errback(err);
       }
       

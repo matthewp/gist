@@ -24,3 +24,5 @@ test(['matthewp/framework.js'], ['matthewp/framework.js', 'master', 'adca60ebab5
 test(['8175510'], ['8175510', 'master', null, 'test-repo2']);
 
 test(['matthewp/framew'], []);
+
+test(['matthewpfakeuser/framework.js'], []);
